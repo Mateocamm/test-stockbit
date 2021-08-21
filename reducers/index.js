@@ -25,7 +25,6 @@ export default function moviesReducer(state = initialState, action) {
     case SEARCH_MOVIES_SUCCESS: {
       let listMovies;
 
-      console.log("data",state.data);
       if (action.page == 1) listMovies = action.data.Search ?? [];
       else
         listMovies = [

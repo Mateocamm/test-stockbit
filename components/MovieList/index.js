@@ -6,12 +6,13 @@ import { searchMovies } from "../../actions";
 
 const ListMovies = styled.div`
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat( auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
   padding: 0px 1rem;
   width: 100%;
 
   @media (min-width: 992px) {
-    grid-template-columns: 1fr 1fr;
+    /* grid-template-columns: 1fr 1fr; */
     padding: 0px 3rem;
   }
 
@@ -33,7 +34,6 @@ function Index({ data, loading, error, page, hasMore, filter, searchMovies }) {
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasMore) {
-          console.log("search more movies");
           searchMovies(filter, page + 1);
         }
       });
