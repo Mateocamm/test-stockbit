@@ -8,6 +8,9 @@ const initialState = {
   data: [],
   loading: false,
   error: "",
+  hasMore: true,
+  page: 1,
+  filter: "",
 };
 
 export default function moviesReducer(state = initialState, action) {
@@ -20,10 +23,22 @@ export default function moviesReducer(state = initialState, action) {
       };
     }
     case SEARCH_MOVIES_SUCCESS: {
+      let listMovies;
+
+      console.log("data",state.data);
+      if (action.page == 1) listMovies = action.data.Search ?? [];
+      else
+        listMovies = [
+          ...new Set([...state.data, ...(action.data.Search ?? [])]),
+        ];
+
       return {
         ...state,
-        data: action.data,
+        data: listMovies,
         loading: false,
+        page: action.page,
+        hasMore: action.data.totalResults > action.page * 10,
+        filter: action.filter
       };
     }
     case SEARCH_MOVIES_ERROR: {
